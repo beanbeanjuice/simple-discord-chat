@@ -1,1 +1,0 @@
-# spigot-discord-stripped
