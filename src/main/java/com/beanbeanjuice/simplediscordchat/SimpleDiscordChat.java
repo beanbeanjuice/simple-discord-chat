@@ -15,11 +15,28 @@ public final class SimpleDiscordChat extends JavaPlugin {
 
     FileConfiguration config = getConfig();
 
+    Timer timer;
+    TimerTask timerTask;
+
     private final String BOT_TOKEN = config.getString("BOT_TOKEN");
     private final String DISCORD_SERVER_ID = config.getString("DISCORD_SERVER_ID");
     private final String DISCORD_CHANNEL_ID = config.getString("DISCORD_CHANNEL_ID");
     private final String ACTIVITY_MESSAGE = config.getString("ACTIVITY_MESSAGE");
     Bot bot;
+
+    private void createTimer() {
+        timer = new Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                int onlinePlayers = Bukkit.getOnlinePlayers().size();
+                int maxPlayers = Bukkit.getMaxPlayers();
+
+                bot.updateChannelDescription(onlinePlayers, maxPlayers);
+            }
+        };
+        timer.schedule(timerTask, 0, TimeUnit.SECONDS.toMillis(5));
+    }
 
     @Override
     public void onEnable() {
@@ -36,25 +53,12 @@ public final class SimpleDiscordChat extends JavaPlugin {
             bot.sendEmbed(Helper.serverStartedEmbed());
             bot.startDiscordChatEventListener();
             Bukkit.getPluginManager().registerEvents(new MinecraftChatListener(bot), this);
+            createTimer();
         } catch (LoginException | InterruptedException e) {
             Bukkit.getLogger().log(Level.INFO, "Simple Discord Chat has had errors starting...");
             throw new RuntimeException(e);
         }
 
-    }
-
-    private void createTimer() {
-        Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                int onlinePlayers = Bukkit.getOnlinePlayers().size();
-                int maxPlayers = Bukkit.getMaxPlayers();
-
-                bot.updateChannelDescription(onlinePlayers, maxPlayers);
-            }
-        };
-        timer.schedule(timerTask, 0, TimeUnit.SECONDS.toMillis(5));
     }
 
     @Override

@@ -42,7 +42,7 @@ public class MinecraftChatListener implements Listener {
 
         bot.sendEmbed(
                 new EmbedBuilder()
-                        .setAuthor("✅ " + player.getName() + " has joined the server!", null, Helper.getPlayerHeadURL(player.getUniqueId()))
+                        .setAuthor(player.getName() + " has joined the server!", null, Helper.getPlayerHeadURL(player.getUniqueId()))
                         .setColor(Color.GREEN)
                         .build()
         );
@@ -54,7 +54,7 @@ public class MinecraftChatListener implements Listener {
 
         bot.sendEmbed(
                 new EmbedBuilder()
-                        .setAuthor("❌ " + player.getName() + " has left the server!", null, Helper.getPlayerHeadURL(player.getUniqueId()))
+                        .setAuthor(player.getName() + " has left the server!", null, Helper.getPlayerHeadURL(player.getUniqueId()))
                         .setColor(Color.RED)
                         .build()
         );
@@ -75,15 +75,16 @@ public class MinecraftChatListener implements Listener {
     @EventHandler
     public void onPlayerAdvancement(@NotNull PlayerAdvancementDoneEvent event) {
         Player player = event.getPlayer();
+        try {
+            String advancementString = player.getName() + " has made the advancement [" + event.getAdvancement().getDisplay().getTitle() + "]!";
 
-        String advancementString = player.getName() + " has made the advancement [" + event.getAdvancement().getDisplay().getTitle() + "]!";
-
-        bot.sendEmbed(
-                new EmbedBuilder()
-                        .setAuthor(advancementString, null, Helper.getPlayerHeadURL(player.getUniqueId()))
-                        .setColor(Helper.getRandomColor())
-                        .build()
-        );
+            bot.sendEmbed(
+                    new EmbedBuilder()
+                            .setAuthor(advancementString, null, Helper.getPlayerHeadURL(player.getUniqueId()))
+                            .setColor(Helper.getRandomColor())
+                            .build()
+            );
+        } catch (NullPointerException ignored) { }
     }
 
 }

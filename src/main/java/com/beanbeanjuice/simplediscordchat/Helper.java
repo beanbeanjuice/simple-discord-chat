@@ -13,7 +13,7 @@ public class Helper {
 
     public static MessageEmbed serverStartedEmbed() {
         return new EmbedBuilder()
-                .setAuthor("Server has started!")
+                .setAuthor("✅ Server has started!")
                 .setTimestamp(new Date().toInstant())
                 .setColor(Color.GREEN)
                 .build();
@@ -21,7 +21,7 @@ public class Helper {
 
     public static MessageEmbed serverShutdownEmbed() {
         return new EmbedBuilder()
-                .setAuthor("Server is shutting down...")
+                .setAuthor("\uD83D\uDED1 Server has stopped.")
                 .setTimestamp(new Date().toInstant())
                 .setColor(Color.RED)
                 .build();
