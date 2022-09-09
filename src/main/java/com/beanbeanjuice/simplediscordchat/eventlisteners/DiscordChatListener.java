@@ -9,8 +9,11 @@ public class DiscordChatListener extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (!event.getAuthor().isBot())
-            Bukkit.broadcastMessage("[Discord] <" + event.getAuthor().getName() + "> " + event.getMessage().getContentStripped());
+        if (event.getAuthor().isBot())
+            return;
+
+        String message = "[Discord] <" + event.getAuthor().getName() + "> " + event.getMessage().getContentStripped();
+        Bukkit.broadcastMessage(message);
     }
 
 }

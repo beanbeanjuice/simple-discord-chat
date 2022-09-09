@@ -1,4 +1,4 @@
-name: Simple-Discord-Chat
+name: simple-discord-chat
 version: '${project.version}'
 main: com.beanbeanjuice.simplediscordchat.SimpleDiscordChat
 api-version: 1.19
