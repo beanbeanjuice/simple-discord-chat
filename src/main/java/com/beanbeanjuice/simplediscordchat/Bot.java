@@ -15,7 +15,6 @@ import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
 import javax.security.auth.login.LoginException;
-import java.util.TimerTask;
 import java.util.logging.Level;
 
 public class Bot {
@@ -51,6 +50,9 @@ public class Bot {
         check();
     }
 
+    /**
+     * Starts the discord {@link net.dv8tion.jda.api.hooks.ListenerAdapter ListenerAdapter}.
+     */
     public void startDiscordChatEventListener() {
         bot.addEventListener(new DiscordChatListener());
     }
@@ -68,16 +70,28 @@ public class Bot {
         return true;
     }
 
+    /**
+     * Send a {@link MessageEmbed} in the specified {@link TextChannel}.
+     * @param embed The {@link MessageEmbed} to send.
+     */
     public void sendEmbed(@NotNull MessageEmbed embed) {
         if (check())
             channel.sendMessageEmbeds(embed).queue();
     }
 
+    /**
+     * Shutdown the bot and send an offline server message.
+     */
     public void shutdown() {
         channel.getManager().setTopic("Server is offline.").queue();
         bot.shutdown();
     }
 
+    /**
+     * Updates the {@link TextChannel}'s topic.
+     * @param onlinePlayers The {@link Integer online players}.
+     * @param maxPlayers The {@link Integer max players}.
+     */
     public void updateChannelDescription(@NotNull Integer onlinePlayers, @NotNull Integer maxPlayers) {
         channel.getManager().setTopic(onlinePlayers + "/" + maxPlayers + " online.").queue();
     }

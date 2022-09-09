@@ -17,7 +17,7 @@ import java.awt.*;
 
 public class MinecraftChatListener implements Listener {
 
-    private Bot bot;
+    private final Bot bot;
 
     public MinecraftChatListener(@NotNull Bot bot) {
         this.bot = bot;

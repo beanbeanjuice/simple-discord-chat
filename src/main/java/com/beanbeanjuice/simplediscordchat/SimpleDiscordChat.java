@@ -18,12 +18,15 @@ public final class SimpleDiscordChat extends JavaPlugin {
     Timer timer;
     TimerTask timerTask;
 
+    private int previousOnlinePlayersCount = 0;
+
     private final String BOT_TOKEN = config.getString("BOT_TOKEN");
     private final String DISCORD_SERVER_ID = config.getString("DISCORD_SERVER_ID");
     private final String DISCORD_CHANNEL_ID = config.getString("DISCORD_CHANNEL_ID");
     private final String ACTIVITY_MESSAGE = config.getString("ACTIVITY_MESSAGE");
     Bot bot;
 
+    // Creates a timer that updates the Discord channel topic.
     private void createTimer() {
         timer = new Timer();
         timerTask = new TimerTask() {
@@ -32,10 +35,13 @@ public final class SimpleDiscordChat extends JavaPlugin {
                 int onlinePlayers = Bukkit.getOnlinePlayers().size();
                 int maxPlayers = Bukkit.getMaxPlayers();
 
-                bot.updateChannelDescription(onlinePlayers, maxPlayers);
+                if (previousOnlinePlayersCount != onlinePlayers)
+                    bot.updateChannelDescription(onlinePlayers, maxPlayers);
+
+                previousOnlinePlayersCount = onlinePlayers;
             }
         };
-        timer.schedule(timerTask, 0, TimeUnit.SECONDS.toMillis(5));
+        timer.schedule(timerTask, 0, TimeUnit.SECONDS.toMillis(1));
     }
 
     @Override
@@ -69,7 +75,4 @@ public final class SimpleDiscordChat extends JavaPlugin {
         bot.shutdown();
     }
 
-    public FileConfiguration getConfigFile() {
-        return config;
-    }
 }
