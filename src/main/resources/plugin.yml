@@ -1,0 +1,8 @@
+name: Simple-Discord-Chat
+version: '${project.version}'
+main: com.beanbeanjuice.simplediscordchat.SimpleDiscordChat
+api-version: 1.19
+prefix: SDC
+authors: [ beanbeanjuice ]
+description: A very simple Discord to Minecraft and Minecraft to Discord chat client.
+website: https://github.com/beanbeanjuice/simple-discord-chat
